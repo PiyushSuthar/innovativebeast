@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { TitleComponent } from "./title";
 
 export default function PostPage() {
   const { id } = useParams();
@@ -8,6 +9,12 @@ export default function PostPage() {
   const [is404, set404] = useState(false);
 
   const baseUrl = "https://innovativebeast.com";
+
+  function decodeHTMLEntities(text) {
+    var textArea = document.createElement("textarea");
+    textArea.innerHTML = text;
+    return textArea.value;
+  }
 
   useEffect(
     function() {
@@ -43,21 +50,28 @@ export default function PostPage() {
   } else {
     if (is404 === false) {
       return (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
-          <hr width="90%" />
-          <h1 dangerouslySetInnerHTML={{ __html: result[0].title.rendered }} />
-          <div
-            className="postContent"
-            dangerouslySetInnerHTML={{ __html: result[0].content.rendered }}
+        <React.Fragment>
+          <TitleComponent
+            title={decodeHTMLEntities(result[0].title.rendered)}
           />
-        </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <hr width="90%" />
+            <h1
+              dangerouslySetInnerHTML={{ __html: result[0].title.rendered }}
+            />
+            <div
+              className="postContent"
+              dangerouslySetInnerHTML={{ __html: result[0].content.rendered }}
+            />
+          </div>
+        </React.Fragment>
       );
     } else {
       return <h1>404</h1>;

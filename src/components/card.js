@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Card({ set }) {
   const { title, excerpt, slug } = set;
+
   function decodeHTMLEntities(text) {
     var textArea = document.createElement("textarea");
     textArea.innerHTML = text;
