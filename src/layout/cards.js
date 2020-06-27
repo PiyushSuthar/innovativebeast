@@ -41,7 +41,7 @@ export default function Cards() {
         setLoading(false);
       })
       .catch(err => console.log(err));
-  }, [page]);
+  }, [page, LoadMoreButton]);
 
   if (isLoading === true) {
     return (
